@@ -1,6 +1,5 @@
 var path = require('path');
 var nodeExternals = require('webpack-node-externals');
-var FixDefaultImportPlugin  = require('webpack-fix-default-import-plugin');
 
 module.exports = {
     mode: 'production',
@@ -29,13 +28,10 @@ module.exports = {
                 loader: 'babel-loader',
                 options: {
                     presets: [
-                        ['env', { "modules": false }]
+                        ['@babel/preset-env', { "modules": false }]
                     ]
                 }
             }
         ]
-    },
-    plugins: [
-        new FixDefaultImportPlugin()
-    ]
+    }
 }
