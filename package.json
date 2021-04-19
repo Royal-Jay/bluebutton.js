@@ -1,45 +1,12 @@
 {
-  "name": "bluebutton",
-  "version": "0.5.0-rc.6",
+  "name": "@kno2/bluebutton",
+  "version": "0.0.0",
   "description": "BlueButton.js helps developers navigate complex health data with ease.",
-  "keywords": [
-    "bb",
-    "blue button",
-    "ccda",
-    "c-cda",
-    "ehr",
-    "emr",
-    "health",
-    "healthcare",
-    "medical",
-    "phr",
-    "record"
-  ],
-  "homepage": "http://blue-button.github.io/bluebutton.js",
-  "bugs": "https://github.com/blue-button/bluebutton.js/issues",
-  "author": {
-    "name": "Tom Black",
-    "email": "tomblack@about.me",
-    "url": "http://blacktm.com"
-  },
-  "contributors": [
-    {
-      "name": "Ravi Sankar",
-      "email": "sankarravi+bbjs@gmail.com"
-    },
-    {
-      "name": "Tyler Hayes",
-      "email": "tyler@thetylerhayes.com"
-    },
-    {
-      "name": "Dmitry Kachaev",
-      "url": "http://twitter.com/kachok"
-    }
-  ],
+  "author": "Kno2, LLC",
   "main": "build/bluebutton.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/blue-button/bluebutton.js.git"
+    "url": "git://github.com/Kno2/bluebutton.js.git"
   },
   "scripts": {
     "build": "webpack",
