@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: '14.x'
       - run: npm ci
-      - run: npm version ${{ ci.ref.name }}
+      - run: npm version ${{ github.ref }}
     
 
   publish-npm:
