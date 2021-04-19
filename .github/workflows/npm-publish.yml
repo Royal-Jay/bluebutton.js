@@ -5,6 +5,19 @@ on:
     types: [published]
 
 jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract tag name
+        id: tag
+        uses: actions/github-script@0.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            return context.payload.ref.replace(/\/refs\/tags\//, '');
+      - name: Echo
+        run: echo ${{ steps.version.outputs.result }}
+        
   build:
     runs-on: ubuntu-latest
     steps:
@@ -13,7 +26,7 @@ jobs:
         with:
           node-version: '14.x'
       - run: npm ci
-      - run: npm version ${{ github.ref }}
+      - run: npm version --no-git-tag-version ${{ steps.version.outputs.result }}
     
 
   publish-npm:
