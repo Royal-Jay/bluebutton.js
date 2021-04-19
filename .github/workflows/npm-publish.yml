@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 14
           registry-url: https://registry.npmjs.org/
-      - run: npm install
+      - run: npm install --production=false
       - run: npm run build
       - run: npm publish --new-version ${{github.event.release.tag_name}}
         env:
