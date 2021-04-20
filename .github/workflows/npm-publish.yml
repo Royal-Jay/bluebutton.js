@@ -12,6 +12,7 @@ jobs:
       id: tag
       uses: actions/github-script@0.2.0
       with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
             return context.payload.ref.replace(/\/refs\/tags\//, '')
         
