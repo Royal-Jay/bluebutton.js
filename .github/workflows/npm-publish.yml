@@ -8,8 +8,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.ref }}
-      - run: echo ${{ github.ref.replace(/\/refs\/tags\//, '') }}
+      - run: echo ${{ github.head_ref }}
         
   build:
     needs: test
