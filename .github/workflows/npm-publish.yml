@@ -9,14 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set Result
-      - uses: actions/github-script@v3
+        uses: actions/github-script@v3
         id: set-result
         with:
           script: return context.ref.replace('/refs/tags/', '')
           result-encoding: string
       - name: Set Version
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+        uses: |
+          actions/checkout@v2
+          actions/setup-node@v2
         with:
           node-version: '14.x'
       - run: npm version --no-git-tag-version "${{steps.set-result.outputs.result}}"
