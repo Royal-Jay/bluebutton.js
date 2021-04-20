@@ -5,14 +5,21 @@ on:
     types: [published]
 
 jobs:
-  test:
+  version:
     runs-on: ubuntu-latest
-    steps:
-      - run: echo ${{ github.head_ref }} 
-      - run: echo ${{ github.ref }}
-        
+    steps:    
+      - uses: actions/github-script@v3
+        id: set-result
+        with:
+          script: return context.payload.ref.replace(/\/refs\/tags\//, '')
+          result-encoding: string
+      - name: Get result
+        run: echo "${{steps.set-result.outputs.result}}"
+      - name: Set Version
+        run: npm version --no-git-tag-version "${{steps.set-result.outputs.result}}"
+    
   build:
-    needs: test
+    needs: version
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,8 +27,6 @@ jobs:
         with:
           node-version: '14.x'
       - run: npm ci
-      - run: npm version --no-git-tag-version ${{ steps.tag.outputs.result }}
-    
 
   publish-npm:
     needs: build
