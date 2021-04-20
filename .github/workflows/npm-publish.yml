@@ -8,8 +8,12 @@ jobs:
   tag:
     runs-on: ubuntu-latest
     steps:
-    - name: Get tag
-      uses: dawidd6/action-get-tag@v1.0.0
+    - name: Extract tag name
+      id: tag
+      uses: actions/github-script@0.2.0
+      with:
+        script: |
+            return context.payload.ref.replace(/\/refs\/tags\//, '')
         
   build:
     needs: tag
@@ -20,7 +24,7 @@ jobs:
         with:
           node-version: '14.x'
       - run: npm ci
-      - run: npm version --no-git-tag-version ${{ steps.tag.outputs.tag }}
+      - run: npm version --no-git-tag-version ${{ steps.tag.outputs.result }}
     
 
   publish-npm:
