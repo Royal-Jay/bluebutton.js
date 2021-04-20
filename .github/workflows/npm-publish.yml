@@ -5,19 +5,14 @@ on:
     types: [published]
 
 jobs:
-  tag:
+  test:
     runs-on: ubuntu-latest
     steps:
-    - name: Extract tag name
-      id: tag
-      uses: actions/github-script@0.2.0
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-            return github.ref.replace(/\/refs\/tags\//, '')
+      - run: echo ${{ github.ref }}
+      - run: echo ${{ github.ref.replace(/\/refs\/tags\//, '') }}
         
   build:
-    needs: tag
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
