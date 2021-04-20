@@ -14,9 +14,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            return $GITHUB_REF.replace(/\/refs\/tags\//, '');
-      - name: Echo
-        run: echo ${{ steps.version.outputs.result }}
+            return $(GITHUB_REF).replace(/\/refs\/tags\//, '');
+      - run: echo ${{ steps.version.outputs.result }}
         
   build:
     runs-on: ubuntu-latest
