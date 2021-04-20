@@ -8,16 +8,11 @@ jobs:
   tag:
     runs-on: ubuntu-latest
     steps:
-      - name: Extract tag name
-        id: tag
-        uses: actions/github-script@0.2.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            return $(GITHUB_REF).replace(/\/refs\/tags\//, '');
-      - run: echo ${{ steps.version.outputs.result }}
+    - name: Get tag
+      uses: dawidd6/action-get-tag@v1.0.0
         
   build:
+    needs: tag
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -25,7 +20,7 @@ jobs:
         with:
           node-version: '14.x'
       - run: npm ci
-      - run: npm version --no-git-tag-version ${{ steps.version.outputs.result }}
+      - run: npm version --no-git-tag-version ${{ steps.tag.outputs.tag }}
     
 
   publish-npm:
