@@ -11,7 +11,7 @@ jobs:
       - uses: actions/github-script@v3
         id: set-result
         with:
-          script: return context.payload.ref.replace(/\/refs\/tags\//, '')
+          script: return context.ref.replace(/\/refs\/tags\//, '')
           result-encoding: string
       - name: Get result
         run: echo "${{steps.set-result.outputs.result}}"
