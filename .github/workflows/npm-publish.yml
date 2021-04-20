@@ -9,9 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:    
       - uses: actions/github-script@v3
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         id: set-result
         with:
-          script: return context.ref.replace(/\/refs\/tags\//, '')
+          script: return context.ref.replace('/refs/tags/', '')
           result-encoding: string
       - name: Get result
         run: echo "${{steps.set-result.outputs.result}}"
