@@ -5,25 +5,7 @@ on:
     types: [published]
 
 jobs:
-  version:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set Result
-        uses: actions/github-script@v3
-        id: set-result
-        with:
-          script: return context.ref.replace('/refs/tags/', '')
-          result-encoding: string
-      - name: Set Version
-        uses: |
-          actions/checkout@v2
-          actions/setup-node@v2
-        with:
-          node-version: '14.x'
-      - run: npm version --no-git-tag-version "${{steps.set-result.outputs.result}}"
-    
   build:
-    needs: version
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -32,7 +14,7 @@ jobs:
           node-version: '14.x'
       - run: npm ci
 
-  publish-npm:
+  npm:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -41,7 +23,15 @@ jobs:
         with:
           node-version: '14.x'
           registry-url: https://registry.npmjs.org/
+      - name: Set Git Version
+        id: set-git-version
+        uses: actions/github-script@v3
+        with:
+          script: return context.ref.replace('/refs/tags/', '')
+          result-encoding: string
       - run: npm ci
+      - run: echo "${{steps.set-git-version.outputs.result}}"
+      - run: npm version npm version --no-git-tag-version "${{steps.set-git-version.outputs.result}}"
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
