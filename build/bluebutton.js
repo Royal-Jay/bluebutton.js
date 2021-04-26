@@ -3641,9 +3641,12 @@ module.exports = function (doc) {
 /***/ 171:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+"use strict";
 /*
  * Parser for the CCDA "plan of care" section
  */
+
+
 var Core = __webpack_require__(1);
 
 module.exports = function (doc) {
@@ -3651,11 +3654,9 @@ module.exports = function (doc) {
   self.doc = doc;
 
   self.care_plan = function (ccda) {
-    var data = [],
-        el;
+    var care_plan = ccda.section('care_plan');
     var data = {},
         el;
-    care_plan = ccda.section('care_plan');
     data.entries = [];
     data.displayName = "Care Plan";
     data.templateId = care_plan.tag('templateId').attr('root');
