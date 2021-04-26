@@ -5,17 +5,7 @@ on:
     types: [published]
 
 jobs:
-  build:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14.x'
-      - run: npm ci
-
   npm:
-    needs: build
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
@@ -30,6 +20,9 @@ jobs:
           script: return context.ref.replace(/refs\/tags\//, '')
           result-encoding: string
       - run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - run: npm run build          
       - run: npm version --new-version ${{steps.set-git-version.outputs.result}} --no-git-tag-version
       - run: npm publish
         env:
